@@ -1,0 +1,4 @@
+base_image: syscomiddleware/oracle-weblogic:generic-centos-12.1.3
+image_name: syscomiddleware/oracle-weblogic-domain
+tags:
+  - generic-centos-12.1.3
