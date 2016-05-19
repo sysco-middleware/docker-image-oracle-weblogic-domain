@@ -4,7 +4,7 @@ DOMAIN      = 'domain1'
 DOMAIN_PATH = '/opt/oraclefmw/config/domains/' + DOMAIN
 APP_PATH    = '/opt/oraclefmw/config/applications/' + DOMAIN
 
-ADMIN_SERVER_ADDRESS = 'admin-server'
+ADMIN_SERVER_ADDRESS = 'admin-server-host'
 LOG_FOLDER     = '/opt/oraclefmw/weblogic/'
 
 # Expanded or Compact

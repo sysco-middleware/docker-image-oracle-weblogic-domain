@@ -5,17 +5,17 @@
   tasks:
     - name: create container
       docker:
-        name: tmp-oracle-wls
+        name: tmp-oracle-wls-domain
         image: "{{ base_image }}"
         command: sleep infinity
         state: started
 
     - add_host:
-        name: tmp-oracle-wls
+        name: tmp-oracle-wls-domain
         groups: docker
         ansible_connection: docker
 
-- hosts: tmp-oracle-wls
+- hosts: tmp-oracle-wls-domain
   connection: docker
   tasks:
     - file:
@@ -44,14 +44,23 @@
     - vars/main.yml
   tasks:
     - name: docker commit
-      command: "docker commit tmp-oracle-wls {{ image_name }}:{{ item }}"
-      with_items: "{{ tags }}"
+      command: "docker commit tmp-oracle-wls-domain tmp-oracle-wls-domain"
 
     - name: docker kill
-      command: "docker kill tmp-oracle-wls"
+      command: "docker kill tmp-oracle-wls-domain"
 
     - name: docker rm
-      command: "docker rm tmp-oracle-wls"
+      command: "docker rm tmp-oracle-wls-domain"
+
+    - name: build image
+      command: "docker build -t {{ image_name }} docker"
+
+    - name: docker tag
+      command: "docker tag {{ image_name }} {{ image_name }}:{{ item }}"
+      with_items: "{{ tags }}"
+
+    - name: docker rmi
+      command: "docker rmi tmp-oracle-wls-domain"
 
     # @todo wait for private repository
     - name: docker push
